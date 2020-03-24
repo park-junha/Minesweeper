@@ -1,0 +1,51 @@
+body {
+    font-family: "Arial";
+}
+
+.gameFooter {
+    width: 599px;
+    background-color: gray;
+    display: flex;
+    border: 1px solid black;
+    font-size: 32px;
+}
+
+.gameCell {
+    display: flex;
+    width: 33%;
+    justify-content: center;
+    align-items: center;
+}
+
+.resetButton {
+    display: inline-block;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    padding: 5px 20px;
+    width: 80px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: black;
+    background-color: gray;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 0 5px #999;
+}
+
+.resetButton:hover {
+    background-color: #999;
+}
+
+.resetButton:active {
+    background-color: silver;
+    box-shadow: 0 5px #666;
+    transform: translateY(2px);
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+}
