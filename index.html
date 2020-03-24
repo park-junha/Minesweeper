@@ -5,20 +5,33 @@
     <script type="text/javascript" src="src/game.js"></script>
 </head>
 <body>
-    <canvas id="gameController" width="601" height="321"></canvas>
-    <div class="gameFooter">
-        <div class="gameCell">
-            <div id="gameMines"></div>
-        </div>
-        <div class="gameCell">
-            <button class="resetButton" id="gameEmote" type="button" onclick="resetGame()" ></button>
-        </div>
-        <div class="gameCell">
-            <div id="gameTimer"></div>
+    <div class="gameCanvas">
+        <canvas id="gameController"></canvas>
+        <div class="gameBar" id="gameBar">
+            <div class="gameCell">
+                <div id="gameMines"></div>
+            </div>
+            <div class="gameCell">
+                <button class="resetButton" id="gameEmote" type="button" onclick="resetGame()" ></button>
+            </div>
+            <div class="gameCell">
+                <div id="gameTimer"></div>
+            </div>
         </div>
     </div>
-    <div class="footer">
-        <h5>Developed by <a href="https://github.com/park-junha" target="_blank">Junha Park</a> during the COVID-19 crisis. View source code <a href="https://github.com/park-junha/Minesweeper" target="_blank">here</a>.</h5>
+    <div class="gameSettings" id="gameSettings">
+        <ul>Difficulty
+            <li><a href="javascript:setDifficulty('beginner')">Beginner</a></li>
+            <li><a href="javascript:setDifficulty('intermediate')">Intermediate</a></li>
+            <li><a href="javascript:setDifficulty('advanced')">Advanced</a></li>
+        </ul>
+        <ul>Tile Size
+            <li><a href="javascript:setTextOffsets('small')">Small</a></li>
+            <li><a href="javascript:setTextOffsets('medium')">Medium</a></li>
+        </ul>
+    </div>
+    <div class="pageFooter">
+        <p>Developed by <a href="https://github.com/park-junha" target="_blank">Junha Park</a> during the COVID-19 crisis. View source code <a href="https://github.com/park-junha/Minesweeper" target="_blank">here</a>.</p>
     </div>
 </body>
 </html>

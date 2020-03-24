@@ -1,12 +1,60 @@
-const gridWidth = 30;
-const gridHeight = 16;
-const tileSize = 20;
-const maxMines = 99;
+const defaultSetting = 'beginner';
+const defaultSize = 'medium';
+const gameSettings = {
+    'beginner': {
+        'gridWidth': 9,
+        'gridHeight': 9,
+        'maxMines': 10,
+        'textSize': 'medium'
+    },
+    'intermediate': {
+        'gridWidth': 16,
+        'gridHeight': 16,
+        'maxMines': 40,
+        'textSize': 'small'
+    },
+    'advanced': {
+        'gridWidth': 30,
+        'gridHeight': 16,
+        'maxMines': 99,
+        'textSize': 'small'
+    }
+};
+const textOffsetSettings = {
+    'small': {
+        'tileSize': 24,
+        'hOffset': 6,
+        'vOffset': -3,
+        'hOffsetMine': 8,
+        'vOffsetMine': 3,
+        'hOffsetFlag': 3,
+        'vOffsetFlag': -3,
+        'hOffsetX': 5,
+        'vOffsetX': -3
+    },
+    'medium': {
+        'tileSize': 36,
+        'hOffset': 8,
+        'vOffset': -4,
+        'hOffsetMine': 11,
+        'vOffsetMine': 3,
+        'hOffsetFlag': 4,
+        'vOffsetFlag': -4,
+        'hOffsetX': 6,
+        'vOffsetX': -4
+    }
+};
 
-const totalTiles = gridWidth * gridHeight;
+var gridWidth;
+var gridHeight;
+var maxMines;
+var totalTiles;
+var minesLeft;
+var tilesToClick;
+var tileSize;
+var textOffsets;
 
 const tileBomb = -1;
-
 const tileDefault = 0;
 const tileFlagged = 1;
 const tileUnsure = 2;
@@ -18,20 +66,48 @@ let gameStarted = false;
 let gameOver = false;
 
 let timer = 0;
-let minesLeft = maxMines;
-let tilesToClick = totalTiles - maxMines;
 
 window.onload = function () {
     canv = document.getElementById("gameController");
-    rect = canv.getBoundingClientRect();
-    ctx = canv.getContext("2d");
     canv.addEventListener("click", tileClick);
     canv.addEventListener("mousedown", tileMouseDown);
     canv.addEventListener("contextmenu", tileRightClick);
+
     setInterval(gameTimer, 1000);
-    ctx.font = "20px Arial";
+
+    setDifficulty();
+}
+
+function setTextOffsets (size) {
+    if (!textOffsetSettings.hasOwnProperty(size) ) {
+        size = defaultSize;
+    }
+    tileSize = textOffsetSettings[size].tileSize;
+    textOffsets = textOffsetSettings[size];
+
+    canv.width = gridWidth * tileSize + 1;
+    canv.height = gridHeight * tileSize + 1;
+
+    document.getElementById("gameBar").style.width = (canv.width - 2) + "px";
+
+    rect = canv.getBoundingClientRect();
+    ctx = canv.getContext("2d");
+    ctx.font = tileSize + "px Arial";
 
     resetGame();
+}
+
+function setDifficulty (difficulty) {
+    if (!gameSettings.hasOwnProperty(difficulty) ) {
+        difficulty = defaultSetting;
+    }
+
+    gridWidth = gameSettings[difficulty].gridWidth;
+    gridHeight = gameSettings[difficulty].gridHeight;
+    maxMines = gameSettings[difficulty].maxMines;
+    totalTiles = gridWidth * gridHeight;
+
+    setTextOffsets(gameSettings[difficulty].textSize);
 }
 
 function resetGame () {
@@ -41,9 +117,10 @@ function resetGame () {
     timer = 0;
     minesLeft = maxMines;
     tilesToClick = totalTiles - maxMines;
+    document.getElementById("gameTimer").style.color = "black";
     document.getElementById("gameTimer").innerHTML = timer;
-    document.getElementById("gameMines").innerHTML = minesLeft;
     document.getElementById("gameEmote").innerHTML = ":-)";
+    document.getElementById("gameMines").innerHTML = minesLeft;
     ctx.fillStyle="black";
     ctx.fillRect(0, 0, canv.width, canv.height);
     ctx.fillStyle="grey";
@@ -57,6 +134,7 @@ function resetGame () {
 }
 
 function startGame (initX, initY) {
+    document.getElementById("gameTimer").style.color = "brown";
     gameState = [];
     for (var row = 0; row < gridHeight; row++) {
         gameState[row] = []
@@ -154,13 +232,13 @@ function markTile (x, y) {
             break;
         case tileFlagged:
             ctx.fillStyle="red";
-            ctx.fillText("O", x*tileSize+3, (y+1)*tileSize-2);
+            ctx.fillText("O", x*tileSize+textOffsets.hOffsetFlag, (y+1)*tileSize+textOffsets.vOffsetFlag);
             minesLeft -= 1;
             document.getElementById("gameMines").innerHTML = minesLeft;
             break;
         case tileUnsure:
             ctx.fillStyle="black";
-            ctx.fillText("?", x*tileSize+5, (y+1)*tileSize-2);
+            ctx.fillText("?", x*tileSize+textOffsets.hOffset, (y+1)*tileSize+textOffsets.vOffset);
             minesLeft += 1;
             document.getElementById("gameMines").innerHTML = minesLeft;
             break;
@@ -214,7 +292,7 @@ function checkTile (x, y) {
             default:
                 ctx.fillStyle="grey";
         }
-        ctx.fillText(gameState[y][x], x*tileSize+5, (y+1)*tileSize-2);
+        ctx.fillText(gameState[y][x], x*tileSize+textOffsets.hOffset, (y+1)*tileSize+textOffsets.vOffset);
     }
 
     if (tilesToClick <= 0) {
@@ -224,6 +302,7 @@ function checkTile (x, y) {
 
 function endGame(x, y) {
     gameOver = true;
+    document.getElementById("gameTimer").style.color = "black";
     document.getElementById("gameEmote").innerHTML = "X-(";
 
     ctx.fillStyle="brown";
@@ -232,18 +311,18 @@ function endGame(x, y) {
     ctx.fillRect(x*tileSize+1, y*tileSize+1, tileSize-1, tileSize-1);
     
     ctx.fillStyle="black";
-    ctx.fillText("*", x*tileSize+7, (y+1)*tileSize+2);
+    ctx.fillText("*", x*tileSize+textOffsets.hOffsetMine, (y+1)*tileSize+textOffsets.vOffsetMine);
 
     for (var j = 0; j < gameState.length; j++) {
         for (var i = 0; i < gameState[j].length; i++) {
             if (gameState[j][i] != tileBomb && (gridClicked[j][i] == tileFlagged || gridClicked[j][i] == tileUnsure) ) {
-                ctx.fillText("X", i*tileSize+4, (j+1)*tileSize-2);
+                ctx.fillText("X", i*tileSize+textOffsets.hOffsetX, (j+1)*tileSize+textOffsets.vOffsetX);
             }
             if (gameState[j][i] == tileBomb && gridClicked[j][i] == tileDefault && (x != i || y != j) ) {
                 ctx.fillStyle="grey";
                 ctx.fillRect(i*tileSize+1, j*tileSize+1, tileSize-1, tileSize-1);
                 ctx.fillStyle="black";
-                ctx.fillText("*", i*tileSize+7, (j+1)*tileSize+2);
+                ctx.fillText("*", i*tileSize+textOffsets.hOffsetMine, (j+1)*tileSize+textOffsets.vOffsetMine);
             }
         }
     }
@@ -251,5 +330,7 @@ function endGame(x, y) {
 
 function winGame() {
     gameOver = true;
+    document.getElementById("gameTimer").style.color = "black";
     document.getElementById("gameEmote").innerHTML = "B-)";
+    document.getElementById("gameMines").innerHTML = "0";
 }

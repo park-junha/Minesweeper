@@ -2,12 +2,19 @@ body {
     font-family: "Arial";
 }
 
-.gameFooter {
-    width: 599px;
+.gameSettings {
+    font-size: 20px;
+}
+
+.gameCanvas {
+    float: left;
+    margin-right: 30px;
+}
+
+.gameBar {
     background-color: gray;
     display: flex;
     border: 1px solid black;
-    font-size: 32px;
 }
 
 .gameCell {
@@ -22,8 +29,8 @@ body {
     margin-top: 4px;
     margin-bottom: 8px;
     padding: 5px 20px;
-    width: 80px;
-    font-size: 20px;
+    width: 75px;
+    font-size: 18px;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
@@ -45,7 +52,8 @@ body {
     transform: translateY(2px);
 }
 
-.footer {
+.pageFooter {
     position: fixed;
     bottom: 0;
+    font-size: 14px;
 }
