@@ -4,34 +4,49 @@
     <link rel="stylesheet" href="src/styles.css"></link>
     <script type="text/javascript" src="src/game.js"></script>
 </head>
-<body>
-    <div class="gameCanvas">
-        <canvas id="gameController"></canvas>
-        <div class="gameBar" id="gameBar">
-            <div class="gameCell">
-                <div id="gameMines"></div>
-            </div>
-            <div class="gameCell">
-                <button class="resetButton" id="gameEmote" type="button" onclick="resetGame()" ></button>
-            </div>
-            <div class="gameCell">
-                <div id="gameTimer"></div>
+<body unselectable="on">
+    <div>
+        <div class="gameCanvas">
+            <canvas id="gameController"></canvas>
+            <div class="gameBar" id="gameBar">
+                <div class="gameCell">
+                    <div id="gameMines"></div>
+                </div>
+                <div class="gameCell">
+                    <button class="resetButton" id="gameEmote" type="button" onclick="resetGame()" ></button>
+                </div>
+                <div class="gameCell">
+                    <div id="gameTimer"></div>
+                </div>
             </div>
         </div>
+        <div class="gameSettings" id="gameSettings">
+            <p class="gameSettingsLinks">Difficulty
+                <br />
+                <a href="javascript:setDifficulty('beginner')">Beginner</a>
+                <br />
+                <a href="javascript:setDifficulty('intermediate')">Intermediate</a>
+                <br />
+                <a href="javascript:setDifficulty('advanced')">Advanced</a>
+            </p>
+            <p class="gameSettingsLinks">Tile Size
+                <br />
+                <a href="javascript:setTextOffsets('small')">Small</a>
+                <br />
+                <a href="javascript:setTextOffsets('medium')">Medium</a>
+            </p>
+        </div>
     </div>
-    <div class="gameSettings" id="gameSettings">
-        <ul>Difficulty
-            <li><a href="javascript:setDifficulty('beginner')">Beginner</a></li>
-            <li><a href="javascript:setDifficulty('intermediate')">Intermediate</a></li>
-            <li><a href="javascript:setDifficulty('advanced')">Advanced</a></li>
-        </ul>
-        <ul>Tile Size
-            <li><a href="javascript:setTextOffsets('small')">Small</a></li>
-            <li><a href="javascript:setTextOffsets('medium')">Medium</a></li>
-        </ul>
+    <div class="gameFooter">
+        <p id="howToPlay">
+            <b>Objective: </b> Uncover all safe tiles.<br />
+            <b>To play: </b> Left-click to uncover tiles, right-click to mark tiles as unsafe (O) or unsure (?).<br />
+            Click the wrong tile, and it's game over.
+        </p>
     </div>
     <div class="pageFooter">
-        <p>Developed by <a href="https://github.com/park-junha" target="_blank">Junha Park</a> during the COVID-19 crisis. View source code <a href="https://github.com/park-junha/Minesweeper" target="_blank">here</a>.</p>
+        <div class="pageFooterText">Developed by <a id="pageFooterLink" href="https://github.com/park-junha" target="_blank">Junha Park</a>. View source code <a id="pageFooterLink" href="https://github.com/park-junha/Minesweeper" target="_blank">here</a>.</div>
+        <div class="pageFooterVersion">Version 1.2</div>
     </div>
 </body>
 </html>
