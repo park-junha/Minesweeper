@@ -1,52 +1,75 @@
 <html>
 <head>
-    <title>Minesweeper</title>
-    <link rel="stylesheet" href="src/styles.css"></link>
-    <script type="text/javascript" src="src/game.js"></script>
+  <title>Minesweeper</title>
+  <meta property="og:title" content="Minesweeper">
+  <meta property="og:description" content="Minesweeper on your browser by Junha Park.">
+  <meta property="og:url" content="img/preview.png">
+  <link rel="stylesheet" href="src/styles.css"></link>
+  <script type="text/javascript" src="src/game.js"></script>
 </head>
 <body unselectable="on">
-    <div>
-        <div class="gameCanvas">
-            <canvas id="gameController"></canvas>
-            <div class="gameBar" id="gameBar">
-                <div class="gameCell">
-                    <div id="gameMines"></div>
-                </div>
-                <div class="gameCell">
-                    <button class="resetButton" id="gameEmote" type="button" onclick="resetGame()" ></button>
-                </div>
-                <div class="gameCell">
-                    <div id="gameTimer"></div>
-                </div>
-            </div>
+  <div>
+    <div class="gameCanvas">
+      <canvas id="gameController"></canvas>
+      <div class="gameBar" id="gameBar">
+        <div class="gameCell">
+          <div id="gameMines"></div>
         </div>
-        <div class="gameSettings" id="gameSettings">
-            <p class="gameSettingsLinks">Difficulty
-                <br />
-                <a href="javascript:setDifficulty('beginner')">Beginner</a>
-                <br />
-                <a href="javascript:setDifficulty('intermediate')">Intermediate</a>
-                <br />
-                <a href="javascript:setDifficulty('advanced')">Advanced</a>
-            </p>
-            <p class="gameSettingsLinks">Tile Size
-                <br />
-                <a href="javascript:setTextOffsets('small')">Small</a>
-                <br />
-                <a href="javascript:setTextOffsets('medium')">Medium</a>
-            </p>
+        <div class="gameCell">
+          <button class="resetButton" id="gameEmote" type="button" onclick="resetGame()" ></button>
         </div>
+        <div class="gameCell">
+          <div id="gameTimer"></div>
+        </div>
+      </div>
     </div>
-    <div class="gameFooter">
-        <p id="howToPlay">
-            <b>Objective: </b> Uncover all safe tiles.<br />
-            <b>To play: </b> Left-click to uncover tiles, right-click to mark tiles as unsafe (O) or unsure (?).<br />
-            Click the wrong tile, and it's game over.
-        </p>
+    <div class="gameSettings" id="gameSettings">
+      <p class="gameSettingsLinks">Difficulty
+        <br />
+        <a href="javascript:setDifficulty('beginner')">Beginner</a>
+        <br />
+        <a href="javascript:setDifficulty('intermediate')">Intermediate</a>
+        <br />
+        <a href="javascript:setDifficulty('advanced')">Advanced</a>
+        <br />
+        <a href="javascript:openModal()">Custom</a>
+      </p>
+      <p class="gameSettingsLinks">Tile Size
+        <br />
+        <a href="javascript:setTextOffsets('small')">Small</a>
+        <br />
+        <a href="javascript:setTextOffsets('medium')">Medium</a>
+      </p>
     </div>
-    <div class="pageFooter">
-        <div class="pageFooterText">Developed by <a id="pageFooterLink" href="https://github.com/park-junha" target="_blank">Junha Park</a>. View source code <a id="pageFooterLink" href="https://github.com/park-junha/Minesweeper" target="_blank">here</a>.</div>
-        <div class="pageFooterVersion">Version 1.2</div>
+  </div>
+  <div class="gameFooter">
+    <p id="howToPlay">
+      <b>Objective: </b> Uncover all safe tiles.<br />
+      <b>To play: </b> Left-click to uncover tiles, right-click to mark tiles as unsafe (O) or unsure (?).<br />
+      Click the wrong tile, and it's game over.
+    </p>
+  </div>
+  <div class="pageFooter">
+    <div class="pageFooterText">Developed by <a id="pageFooterLink" href="https://github.com/park-junha" target="_blank">Junha Park</a>. View source code <a id="pageFooterLink" href="https://github.com/park-junha/Minesweeper" target="_blank">here</a>.</div>
+    <div class="pageFooterVersion">Version 1.3</div>
+  </div>
+  <div id="customGameModal" class="modal">
+    <div class="modal-content">
+      <h4>Custom Game</h4>
+      <span>
+        <label for="customGameWidth">Width:</label>
+        <input type="text" id="customGameWidth">
+        <label for="customGameHeight">Height:</label>
+        <input type="text" id="customGameHeight">
+        <label for="customGameMines">Mines:</label>
+        <input type="text" id="customGameMines">
+      </span>
+      <div class="modal-buttons">
+        <button id="closeModal" type="button" onclick="closeModal()">Close</button>
+        <button id="applyCustomGame" type="button" onclick="applyCustomGame()">Apply</button>
+      </div>
+      <p id="modal-msg"></p>
     </div>
+  </div>
 </body>
 </html>
